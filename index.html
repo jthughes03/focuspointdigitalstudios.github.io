@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusPoint Digital Studios</title>
+  <meta name="description" content="Independent iOS studio building tools for intentional living. Creator of TheWhy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0A1628;
+      --surface:     #101E32;
+      --text:        #EEE9DF;
+      --muted:       #7A8FA6;
+      --gold:        #C9A96E;
+      --gold-dim:    rgba(201, 169, 110, 0.18);
+      --border:      rgba(255, 255, 255, 0.07);
+      --display:     'Cormorant Garamond', Georgia, serif;
+      --body:        'Inter', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(10, 22, 40, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wordmark {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .wordmark em { color: var(--gold); font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 5rem;
+      overflow: hidden;
+    }
+
+    /* Signature element: enormous ghost "WHY" anchored right */
+    .ghost-word {
+      position: absolute;
+      right: -0.06em;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--display);
+      font-size: clamp(16rem, 28vw, 34rem);
+      font-weight: 600;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201, 169, 110, 0.06);
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      opacity: 0;
+      transform: translateY(22px);
+      animation: rise 1s ease forwards 0.15s;
+    }
+
+    .eyebrow {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.8;
+      margin-bottom: 2.75rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--bg);
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.82; }
+
+    /* ─── SHARED SECTION ─── */
+    section { padding: 7rem 3rem; }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .section-eye {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.85rem;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+      font-weight: 600;
+      line-height: 1.12;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .body-text {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 520px;
+    }
+
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* ─── APP SECTION ─── */
+    #thewhy { background: var(--surface); }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.7rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .notify {
+      display: inline-block;
+      margin-top: 1.75rem;
+      color: var(--gold);
+      font-size: 0.875rem;
+      font-weight: 400;
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 0.2rem;
+      transition: border-color 0.2s;
+    }
+    .notify:hover { border-color: var(--gold); }
+
+    /* App icon */
+    .icon-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .app-icon {
+      width: 190px;
+      height: 190px;
+      border-radius: 42px;
+      background: linear-gradient(145deg, #1B2D45 0%, #0A1628 100%);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .app-icon .icon-text {
+      font-family: var(--display);
+      font-size: 3.2rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .app-icon .icon-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .values {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .value {
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--gold);
+    }
+
+    .value h4 {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .value p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2.5rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-wordmark {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .footer-links a {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.45;
+      width: 100%;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 760px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+
+      .hero { padding: 7rem 1.5rem 4rem; }
+      section { padding: 5rem 1.5rem; }
+
+      .app-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .icon-wrap { order: -1; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      footer { padding: 2rem 1.5rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; gap: 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-content { animation: none; opacity: 1; transform: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="wordmark" href="/"><em>Focus</em>Point Digital Studios</a>
+    <ul class="nav-links">
+      <li><a href="#thewhy">TheWhy</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="mailto:hello@focuspointdigitalstudios.com">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="ghost-word" aria-hidden="true">WHY</div>
+    <div class="hero-content">
+      <span class="eyebrow">FocusPoint Digital Studios</span>
+      <h1>Building tools for people who know their why.</h1>
+      <p class="hero-sub">We create iOS apps that help you tune out the noise and act on what actually matters to you.</p>
+      <a class="btn" href="#thewhy">See Our Work</a>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- THE WHY -->
+  <section id="thewhy">
+    <div class="container">
+      <div class="app-grid reveal">
+        <div>
+          <span class="badge">Coming Soon</span>
+          <span class="section-eye">Our Flagship App</span>
+          <h2>TheWhy</h2>
+          <p class="body-text">Your goals are only as powerful as your reasons. TheWhy is an iOS app that delivers your personal motivations at exactly the right moment — so when doubt, distraction, or decision fatigue hits, your own why pulls you back.</p>
+          <a class="notify" href="mailto:hello@focuspointdigitalstudios.com?subject=Keep me posted on TheWhy">
+            Get notified at launch &rarr;
+          </a>
+        </div>
+        <div class="icon-wrap">
+          <div class="app-icon">
+            <span class="icon-text">Why</span>
+            <span class="icon-sub">TheWhy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid reveal">
+        <div>
+          <span class="section-eye">The Studio</span>
+          <h2>Independent. Intentional. iOS-first.</h2>
+          <p class="body-text">FocusPoint Digital Studios is an independent iOS studio based in Tennessee. We build tools for people who want to live with more clarity — apps that work quietly in the background and show up exactly when you need them.</p>
+        </div>
+        <div class="values">
+          <div class="value">
+            <h4>Small on purpose</h4>
+            <p>No VC funding. No growth-at-all-costs. We build for real people, not engagement metrics.</p>
+          </div>
+          <div class="value">
+            <h4>Privacy by default</h4>
+            <p>Everything stays on your device. Your motivations, your goals, your data — yours.</p>
+          </div>
+          <div class="value">
+            <h4>Tools, not traps</h4>
+            <p>We build apps that respect your attention and get out of the way when the job is done.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-wordmark">FocusPoint Digital Studios</span>
+      <ul class="footer-links">
+        <li><a href="#thewhy">TheWhy</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="mailto:hello@focuspointdigitalstudios.com">Contact</a></li>
+      </ul>
+      <span class="footer-copy">&copy; 2026 Center Point Holdings LLC &mdash; DBA FocusPoint Digital Studios. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
